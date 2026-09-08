@@ -1,0 +1,54 @@
+.trigger {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  z-index: 1;
+  padding: 0 6px;
+  line-height: 1.6;
+  border: none;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--color-text) 55%, transparent);
+  color: white;
+  cursor: pointer;
+  opacity: 0;
+}
+
+:global(.image-block-wrapper):hover .trigger,
+.trigger:focus-visible {
+  opacity: 1;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 1px dashed var(--color-divider);
+  color: color-mix(in srgb, var(--color-text) 55%, transparent);
+  font-size: 12px;
+}
+
+.resizeHandle {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background: var(--color-accent);
+  cursor: se-resize;
+  opacity: 0;
+  touch-action: none;
+}
+
+:global(.image-block-wrapper):hover .resizeHandle,
+:global(.image-block-wrapper.ProseMirror-selectednode) .resizeHandle {
+  opacity: 1;
+}

@@ -1,0 +1,67 @@
+.trigger {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  z-index: 1;
+  padding: 0 6px;
+  line-height: 1.6;
+  border: none;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--color-text) 55%, transparent);
+  color: white;
+  cursor: pointer;
+  opacity: 0;
+}
+
+:global(.diagram-ref-wrapper):hover .trigger,
+.trigger:focus-visible {
+  opacity: 1;
+}
+
+.diagram {
+  display: block;
+  width: 100%;
+  cursor: pointer;
+}
+
+.diagram svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.caption {
+  margin-top: 4px;
+  font-size: 12px;
+  text-align: center;
+  color: color-mix(in srgb, var(--color-text) 70%, transparent);
+}
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 1px dashed var(--color-divider);
+  color: color-mix(in srgb, var(--color-text) 55%, transparent);
+  font-size: 12px;
+}
+
+.resizeHandle {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background: var(--color-accent);
+  cursor: se-resize;
+  opacity: 0;
+  touch-action: none;
+}
+
+:global(.diagram-ref-wrapper):hover .resizeHandle,
+:global(.diagram-ref-wrapper.ProseMirror-selectednode) .resizeHandle {
+  opacity: 1;
+}

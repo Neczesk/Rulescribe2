@@ -1,0 +1,47 @@
+.header {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.title {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 1.2;
+  color: var(--color-text);
+  background: transparent;
+  border: none;
+  border-radius: 2px;
+  padding: var(--space-1) var(--space-2);
+  margin: 0 calc(-1 * var(--space-2));
+  outline: none;
+}
+
+.title:hover {
+  background: color-mix(in srgb, var(--color-text) 5%, transparent);
+}
+
+.title:focus-visible {
+  background: var(--color-bg);
+  outline: 2px solid color-mix(in srgb, var(--color-accent) 35%, transparent);
+  outline-offset: 0;
+}
+
+.title::placeholder {
+  color: var(--color-neutral-700);
+  opacity: 0.6;
+}
+
+.notesToggle {
+  flex: none;
+}
+
+.header[data-notes] .title {
+  color: var(--color-neutral-700);
+}

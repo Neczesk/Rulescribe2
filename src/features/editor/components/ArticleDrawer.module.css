@@ -1,0 +1,64 @@
+.drawer {
+  flex-shrink: 0;
+  width: 280px;
+  background: #fff;
+  border-right: 2px solid var(--color-text);
+  padding: var(--space-4);
+  overflow: auto;
+}
+
+.label {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin-bottom: var(--space-3);
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--color-divider);
+  margin: calc(-1 * var(--space-4)) calc(-1 * var(--space-4)) var(--space-4);
+}
+
+.tab {
+  flex: 1;
+  padding: var(--space-3) var(--space-2);
+  font: inherit;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-neutral-700);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+
+.tabOn {
+  color: var(--color-accent-700);
+  border-bottom-color: var(--color-accent);
+  font-weight: 700;
+}
+
+.tabCount {
+  opacity: 0.6;
+}
+
+.empty {
+  font-size: 14px;
+  color: var(--color-neutral-700);
+}
+
+.newArticle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-accent-700);
+  margin-top: var(--space-3);
+  cursor: pointer;
+  background: none;
+  border: none;
+  font: inherit;
+  padding: var(--space-1) var(--space-2);
+}

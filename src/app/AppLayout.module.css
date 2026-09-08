@@ -1,0 +1,16 @@
+.header {
+  background: var(--color-bg);
+  border-bottom: 2px solid var(--color-divider);
+}
+
+.brand {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 18px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.main {
+  background: var(--color-bg);
+}

@@ -1,0 +1,75 @@
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 2px solid var(--color-divider);
+  background: var(--color-bg);
+  flex: none;
+}
+
+.titleRow {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rulesetName {
+  flex: none;
+  max-width: 30ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--color-neutral-700);
+  background: transparent;
+  border: none;
+  border-radius: 2px;
+  padding: var(--space-1) var(--space-2);
+  cursor: pointer;
+}
+
+.rulesetName:hover {
+  color: var(--color-text);
+  background: color-mix(in srgb, var(--color-text) 5%, transparent);
+}
+
+.sep {
+  flex: none;
+  color: var(--color-neutral-700);
+  font-size: 18px;
+}
+
+.title {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--color-text);
+  background: transparent;
+  border: none;
+  border-radius: 2px;
+  padding: var(--space-1) var(--space-2);
+  margin: 0;
+  outline: none;
+}
+
+.title:hover {
+  background: color-mix(in srgb, var(--color-text) 5%, transparent);
+}
+
+.title:focus-visible {
+  background: #fff;
+  outline: 2px solid color-mix(in srgb, var(--color-accent) 35%, transparent);
+  outline-offset: 0;
+}
+
+.title::placeholder {
+  color: var(--color-neutral-700);
+  opacity: 0.6;
+}

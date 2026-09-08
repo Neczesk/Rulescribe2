@@ -1,0 +1,40 @@
+.row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: var(--space-3);
+  align-items: center;
+  width: 100%;
+  padding: var(--space-3) 0;
+  border: none;
+  border-bottom: 1px solid var(--color-divider);
+  background: none;
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.row:hover {
+  background: var(--color-surface);
+}
+
+.name {
+  font-size: 15px;
+}
+
+.meta {
+  font-size: 12px;
+  color: var(--color-neutral-700);
+}
+
+.chevron {
+  display: flex;
+  color: var(--color-neutral-700);
+}
+
+@media (min-width: 760px) {
+  .row {
+    grid-template-columns: 1fr auto auto auto;
+  }
+}

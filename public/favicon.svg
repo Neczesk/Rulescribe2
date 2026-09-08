@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none" role="img" aria-label="Rulescribe">
+  <title>Rulescribe</title>
+  <!--
+    Adaptive tab favicon: transparent, follows the OS light/dark setting.
+    Light-mode colours are plain presentation attributes so any renderer that
+    ignores the @media block still gets a valid icon; browsers apply the dark
+    overrides below. Keep geometry in sync with logo.svg / logo-light.svg.
+  -->
+  <style>
+    @media (prefers-color-scheme: dark) {
+      .ink-stroke { stroke: #f3f2f2; }
+      .ink-fill { fill: #f3f2f2; }
+      .accent { fill: #ff5334; }
+    }
+  </style>
+  <path class="ink-stroke" d="M144 64 L368 64 L456 256 L368 448 L144 448 L56 256 Z" stroke="#201e1d" stroke-width="40" stroke-linejoin="miter" />
+  <path class="ink-fill" d="M256 128 L352 312 L256 400 L160 312 Z" fill="#201e1d" />
+  <rect class="accent" x="236" y="264" width="40" height="136" fill="#ec3013" />
+</svg>

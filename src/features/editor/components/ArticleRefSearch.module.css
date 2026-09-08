@@ -1,0 +1,18 @@
+.row {
+  display: block;
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 13px;
+  text-align: left;
+  border-radius: 2px;
+}
+
+.row:hover {
+  background: var(--color-neutral-100, color-mix(in srgb, var(--color-text) 6%, transparent));
+}
+
+.divider {
+  height: 1px;
+  background: var(--color-divider);
+  margin: 2px 0;
+}

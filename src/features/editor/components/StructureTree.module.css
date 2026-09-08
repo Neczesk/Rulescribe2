@@ -1,0 +1,5 @@
+.tree {
+  display: flex;
+  flex-direction: column;
+  margin: 0 calc(-1 * var(--space-4));
+}

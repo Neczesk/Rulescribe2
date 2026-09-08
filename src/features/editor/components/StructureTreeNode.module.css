@@ -1,0 +1,138 @@
+.row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 30px;
+  padding-right: var(--space-2);
+  font-size: 14px;
+  cursor: grab;
+}
+
+.row[data-root] {
+  cursor: default;
+  font-weight: 600;
+}
+
+.row[data-dragging] {
+  opacity: 0.4;
+}
+
+.row[data-selected] {
+  background: var(--color-accent-100);
+}
+
+.row[data-selected] .title {
+  color: var(--color-accent-700);
+  font-weight: 600;
+}
+
+/* Notes articles read as secondary — they don't ship in the export. */
+.row[data-notes] .title {
+  color: var(--color-neutral-700);
+  font-style: italic;
+}
+
+.row:hover {
+  background: color-mix(in srgb, var(--color-text) 5%, transparent);
+}
+
+/* Drop indicators */
+.row[data-zone="before"]::before,
+.row[data-zone="after"]::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-accent);
+}
+
+.row[data-zone="before"]::before {
+  top: 0;
+}
+
+.row[data-zone="after"]::before {
+  bottom: 0;
+}
+
+.row[data-zone="inside"] {
+  box-shadow: inset 0 0 0 2px var(--color-accent);
+}
+
+.chevron,
+.chevronSpacer {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+}
+
+.chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--color-neutral-700);
+  transition: transform 0.12s ease;
+}
+
+.chevron[data-open] {
+  transform: rotate(90deg);
+}
+
+.title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.renameInput {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  color: var(--color-text);
+  background: var(--color-bg);
+  border: 1px solid var(--color-accent);
+  border-radius: 2px;
+  padding: 1px var(--space-1);
+  outline: none;
+}
+
+.menuButton,
+.notesButton {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--color-neutral-700);
+  opacity: 0;
+}
+
+.row:hover .menuButton,
+.row:hover .notesButton,
+.menuButton[aria-expanded="true"] {
+  opacity: 1;
+}
+
+.notesButton:hover {
+  color: var(--color-text);
+}
+
+/* An article already flagged as notes: keep the toggle visible and lit. */
+.notesButton[data-on] {
+  opacity: 1;
+  color: var(--color-accent-700);
+}

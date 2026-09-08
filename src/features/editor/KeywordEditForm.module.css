@@ -1,0 +1,50 @@
+.form {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-8);
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldLabel {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-neutral-700);
+}
+
+.hint {
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--color-neutral-700);
+}
+
+.shortText {
+  border: 1px solid var(--color-divider);
+  padding: var(--space-2) var(--space-3);
+}
+
+.shortText :global(.tiptap) {
+  outline: none;
+  min-height: 1.6em;
+}
+
+.fullText {
+  border: 1px solid var(--color-divider);
+}
+
+.fullText :global(.tiptap) {
+  padding: var(--space-3);
+  min-height: 140px;
+  outline: none;
+}
+
+.notes textarea {
+  border-style: dashed;
+}

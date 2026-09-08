@@ -1,0 +1,49 @@
+.row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-2);
+  border-bottom: 1px solid var(--color-divider);
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.row:hover {
+  background: var(--color-surface);
+}
+
+.rowActive {
+  background: var(--color-accent-100);
+}
+
+.name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.uses {
+  font-size: 11px;
+  color: var(--color-neutral-700);
+}
+
+.empty {
+  font-size: 13px;
+  color: var(--color-neutral-700);
+  padding: var(--space-2);
+}
+
+.newKeyword {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-accent-700);
+  margin-top: var(--space-3);
+  cursor: pointer;
+  background: none;
+  border: none;
+  font: inherit;
+  padding: var(--space-1) var(--space-2);
+}

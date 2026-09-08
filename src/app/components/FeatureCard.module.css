@@ -1,0 +1,37 @@
+.card {
+  background: #fff;
+  border-color: var(--color-neutral-300);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-accent-100);
+  color: var(--color-accent-700);
+  flex: none;
+}
+
+.title {
+  font-size: 22px;
+  margin: 0;
+}
+
+.description {
+  margin: 0;
+  color: var(--color-neutral-700);
+  font-size: 14px;
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: auto;
+  padding-top: var(--space-2);
+}

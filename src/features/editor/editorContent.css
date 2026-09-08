@@ -1,0 +1,187 @@
+/* Shared rendering for custom TipTap nodes — imported by the article editor and
+   the keyword full-text editor so both render tables, callouts, and refs alike. */
+
+/* — tables — */
+.tiptap .tableWrapper {
+  overflow-x: auto;
+  margin: var(--space-4) 0;
+}
+
+.tiptap table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  table-layout: fixed;
+}
+
+.tiptap th,
+.tiptap td {
+  position: relative;
+  padding: var(--space-2);
+  border-bottom: 1px solid var(--color-divider);
+  vertical-align: top;
+  text-align: left;
+}
+
+.tiptap th {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--color-text) 60%, transparent);
+  border-bottom: 2px solid var(--color-divider);
+}
+
+.tiptap tbody tr:hover {
+  background: color-mix(in srgb, var(--color-text) 4%, transparent);
+}
+
+.tiptap .selectedCell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--color-accent) 16%, transparent);
+  pointer-events: none;
+}
+
+/* — callout — */
+.tiptap .callout {
+  border: 1px solid var(--color-text);
+  padding: var(--space-3);
+  margin: var(--space-4) 0;
+}
+
+.tiptap .callout-label {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--color-accent-700);
+  margin-bottom: var(--space-1);
+}
+
+.tiptap .callout-label:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--color-accent) 35%, transparent);
+  outline-offset: 2px;
+}
+
+.tiptap .callout-body > :last-child {
+  margin-bottom: 0;
+}
+
+/* — article reference — */
+.tiptap .article-ref-wrapper {
+  white-space: nowrap;
+}
+
+.tiptap .article-ref {
+  color: var(--color-accent-700);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.tiptap .article-ref:hover {
+  color: var(--color-accent);
+}
+
+.tiptap .article-ref[data-missing="true"] {
+  color: var(--color-text);
+  text-decoration-style: dotted;
+  opacity: 0.6;
+}
+
+/* — keyword reference — */
+.tiptap .keyword-ref-wrapper {
+  white-space: nowrap;
+}
+
+.tiptap .keyword-ref {
+  background: var(--color-accent-100);
+  color: var(--color-accent-700);
+  font-weight: 600;
+  padding: 0 3px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.tiptap .keyword-ref:hover {
+  text-decoration: underline;
+}
+
+.tiptap .keyword-ref[data-missing="true"] {
+  background: color-mix(in srgb, var(--color-text) 8%, transparent);
+  color: var(--color-text);
+  opacity: 0.7;
+}
+
+.tiptap .article-ref.ProseMirror-selectednode,
+.tiptap .keyword-ref.ProseMirror-selectednode {
+  outline: 2px solid color-mix(in srgb, var(--color-accent) 35%, transparent);
+  outline-offset: 2px;
+}
+
+/* — enriched reference (live name / summary / full text) — */
+.tiptap .keyword-ref--live,
+.tiptap .article-ref--live {
+  background: none;
+  color: inherit;
+  font-weight: inherit;
+  padding: 0;
+  border-bottom: 1px dotted var(--color-accent-700);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.tiptap .keyword-ref--live:hover,
+.tiptap .article-ref--live:hover {
+  text-decoration: none;
+  border-bottom-color: var(--color-accent);
+}
+
+.tiptap .ref-caret {
+  border: 0;
+  background: none;
+  padding: 0 2px;
+  font-size: 10px;
+  line-height: 1;
+  vertical-align: middle;
+  cursor: pointer;
+  color: color-mix(in srgb, var(--color-text) 55%, transparent);
+}
+
+.tiptap .ref-caret:hover {
+  color: var(--color-accent-700);
+}
+
+/* — image block — */
+.tiptap .image-block-wrapper {
+  position: relative;
+  max-width: 100%;
+}
+
+.tiptap .image-block-wrapper[data-wrap="left"] {
+  float: left;
+  margin: 0 var(--space-4) var(--space-2) 0;
+}
+
+.tiptap .image-block-wrapper[data-wrap="right"] {
+  float: right;
+  margin: 0 0 var(--space-2) var(--space-4);
+}
+
+.tiptap .image-block-wrapper[data-wrap="none"] {
+  display: block;
+  margin: var(--space-4) 0;
+}
+
+.tiptap .image-block-wrapper.ProseMirror-selectednode {
+  outline: 2px solid color-mix(in srgb, var(--color-accent) 35%, transparent);
+  outline-offset: 2px;
+}
