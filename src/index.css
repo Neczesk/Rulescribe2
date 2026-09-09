@@ -3,15 +3,22 @@
 :root {
   --color-bg: #f3f2f2;
   --color-surface: #eae9e9;
+  /* Raised panels (cards, drawers, popovers) that should sit above --color-bg. */
+  --color-raised: #ffffff;
   --color-text: #201e1d;
   --color-accent: #ec3013;
   --color-accent-100: #fff2ef;
   --color-accent-700: #ae1800;
   --color-accent-800: #7c1405;
+  /* Readable text/iconography painted on top of --color-accent. */
+  --color-on-accent: #ffffff;
   --color-divider: color-mix(in srgb, #201e1d 40%, transparent);
   --color-neutral-300: #d7d3d3;
   --color-neutral-500: #9b9797;
   --color-neutral-700: #605d5d;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.14);
 
   --font-heading: "Archivo", system-ui, sans-serif;
   --font-body: "Archivo", system-ui, sans-serif;
@@ -28,6 +35,37 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/*
+ * Dark mode. Keyed on the attribute Mantine's ColorSchemeManager writes to
+ * <html> (see MantineProvider defaultColorScheme="auto"), so this hand-rolled
+ * token layer flips in lockstep with Mantine components and the theme toggle —
+ * "auto" resolves it from the OS `prefers-color-scheme` and reacts to changes.
+ *
+ * Palette borrows the "Nightwatch" export theme's ink/paper (core/export/theme.ts):
+ * a near-black ground with warm-grey text and a gold accent. It's only the
+ * colours we reuse — the export theme itself never touches the app.
+ */
+:root[data-mantine-color-scheme="dark"] {
+  --color-bg: #14161a;
+  --color-surface: #202329;
+  --color-raised: #23272e;
+  --color-text: #e8e6e1;
+  --color-accent: #d9a13b;
+  --color-accent-100: color-mix(in srgb, #d9a13b 15%, transparent);
+  --color-accent-700: #ecca8c;
+  --color-accent-800: #f2d9a8;
+  --color-on-accent: #14161a;
+  --color-divider: color-mix(in srgb, #e8e6e1 22%, transparent);
+  --color-neutral-300: #3b4048;
+  --color-neutral-500: #8a9099;
+  --color-neutral-700: #b6bbc1;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 14px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.55);
+
+  color-scheme: dark;
 }
 
 #root {

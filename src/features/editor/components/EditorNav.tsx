@@ -1,6 +1,7 @@
 import { ActionIcon, Badge, Button, Group, Menu, Modal, TextInput, Tooltip } from "@mantine/core";
 import { lazy, Suspense, useRef, useState } from "react";
 import { Link } from "react-router";
+import { ThemeToggle } from "../../../app/components/ThemeToggle";
 import type { SaveStatus } from "../../../core/state/persistence";
 import { IconArrowLeft, IconDots, IconListBuilding, IconMenu, IconStats } from "../icons";
 import classes from "./EditorNav.module.css";
@@ -169,6 +170,7 @@ export function EditorNav({
           {SAVE_LABEL[saveStatus]}
         </Badge>
       </Tooltip>
+      <ThemeToggle />
       <Menu position="bottom-end" withinPortal shadow="md" width={190}>
         <Menu.Target>
           <ActionIcon variant="subtle" color="accent" aria-label="Ruleset actions">

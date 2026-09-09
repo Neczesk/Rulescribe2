@@ -20,6 +20,24 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="RuleScribe" />
     <script>
+      // Resolve the color scheme before first paint so dark users get no light
+      // flash. Mirrors @mantine/core's ColorSchemeScript: same localStorage key
+      // and the html[data-mantine-color-scheme] attribute MantineProvider reads.
+      (function () {
+        try {
+          var stored = localStorage.getItem("mantine-color-scheme-value");
+          var scheme = stored === "light" || stored === "dark" ? stored : "auto";
+          var resolved =
+            scheme === "auto"
+              ? window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light"
+              : scheme;
+          document.documentElement.setAttribute("data-mantine-color-scheme", resolved);
+        } catch (e) {}
+      })();
+    </script>
+    <script>
       (function (l) {
         if (l.search[1] === "/") {
           var decoded = l.search

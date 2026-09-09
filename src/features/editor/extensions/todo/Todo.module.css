@@ -20,7 +20,7 @@
   margin-top: 2px;
   border: 1.5px solid var(--color-accent);
   background: none;
-  color: #fff;
+  color: var(--color-on-accent);
   display: flex;
   align-items: center;
   justify-content: center;

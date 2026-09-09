@@ -2,7 +2,7 @@
   max-width: 720px;
   margin: 0 auto;
   padding: var(--space-8);
-  background: #fff;
+  background: var(--color-raised);
   box-shadow: var(--shadow-sm);
 }
 

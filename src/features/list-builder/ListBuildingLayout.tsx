@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import { Link, Navigate, Outlet, useMatches, useParams } from "react-router";
+import { ThemeToggle } from "../../app/components/ThemeToggle";
 import { listBuildingHomeView } from "./homeView";
 import { IconBook, IconHome } from "./icons";
 import { ListBuildingSidebar } from "./ListBuildingSidebar";
@@ -87,6 +88,7 @@ export function ListBuildingLayout() {
           <button type="button" className={classes.secondaryBtn} disabled>
             Test mode
           </button>
+          <ThemeToggle />
         </div>
       </div>
 

@@ -8,7 +8,7 @@
   border: none;
   border-radius: 3px;
   background: color-mix(in srgb, var(--color-text) 55%, transparent);
-  color: white;
+  color: var(--color-bg);
   cursor: pointer;
   opacity: 0;
 }

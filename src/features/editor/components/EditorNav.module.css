@@ -64,7 +64,7 @@
 }
 
 .title:focus-visible {
-  background: #fff;
+  background: var(--color-raised);
   outline: 2px solid color-mix(in srgb, var(--color-accent) 35%, transparent);
   outline-offset: 0;
 }
