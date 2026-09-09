@@ -47,6 +47,24 @@ export function collectArticleIds(node: StructureNode): string[] {
   return [node.articleId, ...node.children.flatMap(collectArticleIds)];
 }
 
+/**
+ * The chain of `articleId`s from `root` down to `articleId`'s parent, root-first
+ * (i.e. the article's ancestors, excluding the article itself). Empty when the
+ * article is the root or is not in the tree. Used to build a breadcrumb.
+ */
+export function articleAncestorIds(root: StructureNode, articleId: string): string[] {
+  const path: string[] = [];
+  const walk = (node: StructureNode, trail: string[]): boolean => {
+    if (node.articleId === articleId) {
+      path.push(...trail);
+      return true;
+    }
+    return node.children.some((child) => walk(child, [...trail, node.articleId]));
+  };
+  walk(root, []);
+  return path;
+}
+
 /** True if `maybeDescendantId` is `ancestorId` itself or nested beneath it. */
 export function isDescendant(
   root: StructureNode,

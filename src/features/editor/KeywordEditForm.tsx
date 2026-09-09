@@ -9,6 +9,7 @@ import { EditorToolbar } from "./components/EditorToolbar";
 import { ArticleRef } from "./extensions/article-ref/ArticleRef";
 import { Callout } from "./extensions/callout/Callout";
 import { KeywordRef } from "./extensions/keyword-ref/KeywordRef";
+import { Todo } from "./extensions/todo/Todo";
 import "./editorContent.css";
 import classes from "./KeywordEditForm.module.css";
 import { useRuleset } from "./state/useCurrentRuleset";
@@ -38,7 +39,7 @@ export function KeywordEditForm({ keyword }: KeywordEditFormProps) {
 
   const textEditor = useEditor(
     {
-      extensions: [StarterKit, Callout, ArticleRef, KeywordRef],
+      extensions: [StarterKit, Callout, Todo, ArticleRef, KeywordRef],
       content: keyword.text,
       onUpdate: ({ editor }) => update({ text: editor.getJSON() }),
     },

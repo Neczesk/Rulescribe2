@@ -1,0 +1,299 @@
+{
+  "blockingSeverity": "severe",
+  "codes": {
+    "REF-01": {
+      "area": "references",
+      "severity": "minor",
+      "title": "{countPhrase} {verb} not references",
+      "detail": "The exact string “{keyword}” appears as plain text in {names}. Those copies will not update."
+    },
+    "REF-02": {
+      "area": "references",
+      "severity": "severe",
+      "title": "{countPhrase} {pointVerb} at a deleted keyword",
+      "detail": "{names} reference a keyword that no longer exists. Those references render as “Unknown keyword”."
+    },
+    "REF-03": {
+      "area": "references",
+      "severity": "severe",
+      "title": "{countPhrase} {pointVerb} at a deleted article",
+      "detail": "{names} reference an article that no longer exists. Those links render as “Unknown article” and export without a target."
+    },
+    "REF-04": {
+      "area": "references",
+      "severity": "severe",
+      "title": "{countPhrase} {pointVerb} at a deleted diagram",
+      "detail": "{names} reference a diagram that no longer exists. Those embeds export as an empty block."
+    },
+    "REF-05": {
+      "area": "references",
+      "severity": "severe",
+      "title": "{countPhrase} {pointVerb} at a deleted image",
+      "detail": "{names} reference an image that no longer exists. Those embeds export as a blank box."
+    },
+    "REF-06": {
+      "area": "references",
+      "severity": "severe",
+      "title": "{countPhrase} {verb} no stored file",
+      "detail": "{names} exist in the registry but the bytes are gone from local storage."
+    },
+    "REF-07": {
+      "area": "references",
+      "severity": "severe",
+      "title": "{countPhrase}",
+      "detail": "{chain}."
+    },
+    "REF-08": {
+      "area": "references",
+      "severity": "severe",
+      "title": "{countPhrase} to self",
+      "detail": "{names} {embedVerb} its own text."
+    },
+    "REF-09": {
+      "area": "references",
+      "severity": "severe",
+      "title": "{countPhrase} {resolveVerb} to nothing",
+      "detail": "{names} {haveVerb} no full text. A Live: Full text reference to it exports empty."
+    },
+    "REF-10": {
+      "area": "references",
+      "severity": "severe",
+      "title": "{countPhrase} {resolveVerb} to nothing",
+      "detail": "{names} {haveVerb} no short text. A Live: Summary reference to it exports empty."
+    },
+    "REF-11": {
+      "area": "references",
+      "severity": "severe",
+      "title": "{countPhrase} {linkVerb} into a notes article",
+      "detail": "{names}. Notes articles are excluded from the export, so the anchor breaks."
+    },
+    "REF-12": {
+      "area": "references",
+      "severity": "info",
+      "title": "Deep live-embed chain",
+      "detail": "{start} pulls text through {hopsPhrase} of live references."
+    },
+    "REF-13": {
+      "area": "references",
+      "severity": "minor",
+      "title": "{countPhrase} {verb} never referenced",
+      "detail": "{names} {verb} defined but linked from nowhere."
+    },
+    "REF-14": {
+      "area": "references",
+      "severity": "info",
+      "title": "{countPhrase} {verb} used in a single article",
+      "detail": "{detail}"
+    },
+    "REF-15": {
+      "area": "references",
+      "severity": "minor",
+      "title": "{countPhrase} {verb} never referenced",
+      "detail": "{names} {verb} not embedded in any article."
+    },
+    "REF-16": {
+      "area": "references",
+      "severity": "info",
+      "title": "{countPhrase} {verb} never referenced",
+      "detail": "{detail}"
+    },
+    "REF-17": {
+      "area": "references",
+      "severity": "info",
+      "title": "{countPhrase} {verbHave} no inbound links",
+      "detail": "{names} {verbBe} reachable only from the tree."
+    },
+    "CON-01": {
+      "area": "content",
+      "severity": "minor",
+      "title": "{countPhrase} {verb} no full text",
+      "detail": "{names} {verb} a short text only."
+    },
+    "CON-02": {
+      "area": "content",
+      "severity": "severe",
+      "title": "{countPhrase} {verb} no text at all",
+      "detail": "{names} {verb} neither a short text nor a full text."
+    },
+    "CON-03": {
+      "area": "content",
+      "severity": "minor",
+      "title": "{countPhrase} {shape}",
+      "detail": "{names} {verb} no body text and no child sections."
+    },
+    "CON-04": {
+      "area": "content",
+      "severity": "severe",
+      "title": "{countPhrase} {verb} no title",
+      "detail": "{detail}"
+    },
+    "CON-05": {
+      "area": "content",
+      "severity": "severe",
+      "title": "{countPhrase} {verb} no display name",
+      "detail": "References to {pronoun} render as a blank link and cannot be found by the suggestion menu."
+    },
+    "CON-06": {
+      "area": "content",
+      "severity": "info",
+      "title": "Duplicate short text",
+      "detail": "{names} share an identical short text string."
+    },
+    "CON-07": {
+      "area": "content",
+      "severity": "minor",
+      "title": "Duplicate article title",
+      "detail": "{count} articles are titled {name}."
+    },
+    "CON-08": {
+      "area": "content",
+      "severity": "severe",
+      "title": "Duplicate keyword name",
+      "detail": "{count} keywords are named {name}; suggestions and auto-linking cannot tell them apart."
+    },
+    "CON-09": {
+      "area": "content",
+      "severity": "minor",
+      "title": "Keyword names differ only by case or plural",
+      "detail": "{names} exist as separate keywords."
+    },
+    "CON-10": {
+      "area": "content",
+      "severity": "minor",
+      "title": "{countPhrase} {verb} longer than the full text",
+      "detail": "{name}'s summary runs {shortWords} against a {fullWords} body."
+    },
+    "CON-11": {
+      "area": "content",
+      "severity": "minor",
+      "title": "{countPhrase} {exceedVerb} the summary budget",
+      "detail": "{names} run past {limit} characters, which crowds any Live: Summary reference."
+    },
+    "CON-12": {
+      "area": "content",
+      "severity": "minor",
+      "title": "{countPhrase} left in body text",
+      "detail": "TODO, TBD, FIXME or ??? appears in {names}."
+    },
+    "CON-13": {
+      "area": "content",
+      "severity": "info",
+      "title": "{countPhrase} still {verb} author notes",
+      "detail": "Notes are draft-only — they appear in the draft export and are omitted from the rulebook."
+    },
+    "CON-14": {
+      "area": "content",
+      "severity": "minor",
+      "title": "Placeholder text in {countPhrase}",
+      "detail": "Lorem ipsum appears in {names}."
+    },
+    "CON-15": {
+      "area": "content",
+      "severity": "info",
+      "title": "Ruleset metadata incomplete",
+      "detail": "No {names} is set on this ruleset; the export's title page falls back to a placeholder."
+    },
+    "STR-01": {
+      "area": "structure",
+      "severity": "severe",
+      "title": "{countPhrase} {verb} not in the structure tree",
+      "detail": "{names} exist in the registry but {verb} unreachable from the tree, so {pronoun} never export."
+    },
+    "STR-02": {
+      "area": "structure",
+      "severity": "severe",
+      "title": "{countPhrase} {pointVerb} at a missing article",
+      "detail": "{subject} an article id that is not in the registry."
+    },
+    "STR-03": {
+      "area": "structure",
+      "severity": "severe",
+      "title": "{countPhrase} {appearVerb} twice in the tree",
+      "detail": "{names} {occupyVerb} more than one place in the structure; export numbers and anchors collide."
+    },
+    "STR-04": {
+      "area": "structure",
+      "severity": "info",
+      "title": "{countPhrase} {verb} a single child",
+      "detail": "{names} {containVerb} exactly one article; the nesting may not be earning its level."
+    },
+    "STR-05": {
+      "area": "structure",
+      "severity": "info",
+      "title": "Tree nests deeper than {threshold} levels",
+      "detail": "{path} sits at depth {depth}."
+    },
+    "STR-06": {
+      "area": "structure",
+      "severity": "minor",
+      "title": "{countPhrase} {verb} no internal headings",
+      "detail": "{list} with no heading to break it up."
+    },
+    "STR-07": {
+      "area": "structure",
+      "severity": "info",
+      "title": "{countPhrase} {verb} very short",
+      "detail": "{list}; consider folding {pronoun} into the parent."
+    },
+    "STR-08": {
+      "area": "structure",
+      "severity": "info",
+      "title": "{countPhrase} {verb} inside an exported section",
+      "detail": "{names} {fallVerb} between two exported articles and leaves a gap in the numbering."
+    },
+    "RDB-01": {
+      "area": "readability",
+      "severity": "minor",
+      "title": "{countPhrase} {scoreVerb} above grade {threshold}",
+      "detail": "Flesch–Kincaid grade level: {list}."
+    },
+    "RDB-02": {
+      "area": "readability",
+      "severity": "minor",
+      "title": "{countPhrase} {averageVerb} over {threshold} words per sentence",
+      "detail": "{list}"
+    },
+    "RDB-03": {
+      "area": "readability",
+      "severity": "minor",
+      "title": "{countPhrase}",
+      "detail": "{list}."
+    },
+    "DIA-01": {
+      "area": "diagrams",
+      "severity": "severe",
+      "title": "{countPhrase} {doVerb} not parse",
+      "detail": "{names} {failVerb} to render and exports as an error block."
+    },
+    "DIA-02": {
+      "area": "diagrams",
+      "severity": "minor",
+      "title": "{countPhrase} {verb} empty",
+      "detail": "{names} {verb} no content beyond the starter template."
+    },
+    "DIA-03": {
+      "area": "diagrams",
+      "severity": "minor",
+      "title": "{countPhrase} {verb} no name",
+      "detail": "{pronoun} without a caption and cannot be found by name when inserting."
+    },
+    "EXP-01": {
+      "area": "export",
+      "severity": "info",
+      "title": "{countPhrase} in body text",
+      "detail": "{names} link out to the web; the exported rulebook is otherwise self-contained."
+    },
+    "EXP-02": {
+      "area": "export",
+      "severity": "info",
+      "title": "{countPhrase}",
+      "detail": "{list}; downscaling would shrink the export."
+    },
+    "EXP-03": {
+      "area": "export",
+      "severity": "info",
+      "title": "{countPhrase} {verb} missing metadata",
+      "detail": "{detail}"
+    }
+  }
+}

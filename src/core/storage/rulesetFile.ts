@@ -2,6 +2,7 @@ import { shortId } from "../../util/nanoid";
 import { slugify } from "../../util/slug";
 import { ruleset, type Ruleset } from "../schema/ruleset";
 import { loadImageBlob, saveImageBlob } from "./imageStorage";
+import { migrate } from "./rulesetMigrate";
 import { loadRuleset, serializeRuleset } from "./rulesetStorage";
 
 const EXTENSION_BY_MIME: Record<string, string> = {
@@ -82,7 +83,9 @@ export async function readRulesetFile(file: File): Promise<Ruleset> {
     throw new Error("That file's ruleset.json isn't valid JSON.");
   }
 
-  const parsed = ruleset.safeParse(json);
+  // Run forward-migrations too — an exported bundle can be on an older schema
+  // version, and pure Zod defaults don't cover the transform migrations.
+  const parsed = ruleset.safeParse(migrate(json));
   if (!parsed.success) {
     throw new Error("That file isn't a Rulescribe ruleset.");
   }

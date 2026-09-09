@@ -187,6 +187,69 @@ describe("rulesetMigrate — resource constraint backfill", () => {
   });
 });
 
+describe("rulesetMigrate — TODO nodes (v13 -> v14)", () => {
+  /** A current ruleset blob with one article whose body contains "TODO". */
+  function todoBlob(bodyText: string): Record<string, unknown> {
+    const base = JSON.parse(JSON.stringify(createRuleset())) as Record<string, unknown>;
+    const registry = base.registry as { articles: Record<string, Record<string, unknown>> };
+    const [articleId, article] = Object.entries(registry.articles)[0];
+    return {
+      ...base,
+      schemaVersion: 13,
+      registry: {
+        ...registry,
+        articles: {
+          [articleId]: {
+            ...article,
+            text: {
+              type: "doc",
+              content: [{ type: "paragraph", content: [{ type: "text", text: bodyText }] }],
+            },
+          },
+        },
+      },
+    };
+  }
+
+  interface Block {
+    type: string;
+    attrs?: Record<string, unknown>;
+    content?: { type: string; text?: string }[];
+  }
+  const bodyOf = (blob: Record<string, unknown>): Block[] => {
+    const parsed = ruleset.parse(migrate(blob));
+    const article = Object.values(parsed.registry.articles)[0];
+    return (article.text as { content: Block[] }).content;
+  };
+
+  it("turns a bare TODO sentence into a todo node, keeping the rest", () => {
+    const content = bodyOf(
+      todoBlob(
+        "After a hit is scored, roll to wound. TODO confirm flanking stacks with cover. A wound removes the model.",
+      ),
+    );
+    expect(content.map((n) => n.type)).toEqual(["paragraph", "todo", "paragraph"]);
+    expect(content[1].attrs).toMatchObject({
+      text: "confirm flanking stacks with cover.",
+      resolved: false,
+    });
+    expect(typeof content[1].attrs?.todoId).toBe("string");
+    expect(content[0].content?.[0].text).toBe("After a hit is scored, roll to wound.");
+    expect(content[2].content?.[0].text).toBe("A wound removes the model.");
+  });
+
+  it("handles a TODO that starts the block and runs to the end", () => {
+    const content = bodyOf(todoBlob("TODO write this section"));
+    expect(content.map((n) => n.type)).toEqual(["todo"]);
+    expect(content[0].attrs).toMatchObject({ text: "write this section", resolved: false });
+  });
+
+  it("leaves articles without the string TODO untouched", () => {
+    const content = bodyOf(todoBlob("Nothing to do here."));
+    expect(content.map((n) => n.type)).toEqual(["paragraph"]);
+  });
+});
+
 describe("rulesetMigrate — versioning", () => {
   it("stamps the current version and drops keys removed along the way", () => {
     const result = parsed();

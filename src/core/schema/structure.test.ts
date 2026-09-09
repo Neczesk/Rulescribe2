@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { StructureNode } from "./ruleset";
 import {
+  articleAncestorIds,
   collectArticleIds,
   createArticleNode,
   findNodeContext,
@@ -127,5 +128,17 @@ describe("createArticleNode", () => {
     expect(article.title).toBe("Movement");
     expect(node.articleId).toBe(article.id);
     expect(node.children).toEqual([]);
+  });
+});
+
+describe("articleAncestorIds", () => {
+  it("returns the root-first ancestor chain, excluding the article itself", () => {
+    expect(articleAncestorIds(tree(), "a1")).toEqual(["root", "a"]);
+    expect(articleAncestorIds(tree(), "b")).toEqual(["root"]);
+  });
+
+  it("is empty for the root and for unknown ids", () => {
+    expect(articleAncestorIds(tree(), "root")).toEqual([]);
+    expect(articleAncestorIds(tree(), "nope")).toEqual([]);
   });
 });

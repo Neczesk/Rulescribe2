@@ -1,7 +1,7 @@
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Navigate, useParams } from "react-router";
-import { keywordReferences } from "../../core/schema/references";
+import { keywordReferences, todoReferences } from "../../core/schema/references";
 import { currentRulesetStore } from "../../core/state/currentRuleset";
 import { useState } from "react";
 import { ArticleDrawer } from "./components/ArticleDrawer";
@@ -46,6 +46,7 @@ export function KeywordEditorPage() {
           onDownload={fileActions.onDownload}
           onOpenFile={fileActions.onOpenFile}
           listBuildingHref={paths.listBuilding}
+          exportHref={paths.export}
         />
         <div className={classes.body}>
           <ArticleDrawer
@@ -55,6 +56,7 @@ export function KeywordEditorPage() {
             articles={ruleset.registry.articles}
             keywords={ruleset.registry.keywords}
             references={keywordReferences(ruleset)}
+            todos={todoReferences(ruleset)}
             selectedKeywordId={keyword.id}
           />
           <div className={classes.article}>

@@ -76,12 +76,32 @@ export function IconCallout({ size = 16 }: IconProps) {
   );
 }
 
+export function IconTodo({ size = 16 }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" {...strokeProps}>
+      <rect x="3" y="3" width="18" height="18" rx="2" />
+      <path d="M7 12.5l3 3 7-7" />
+    </svg>
+  );
+}
+
 export function IconListBuilding({ size = 15 }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" {...strokeProps}>
       <rect x="3" y="4" width="18" height="16" rx="0" />
       <path d="M3 9h18" />
       <path d="M9 9v11" />
+    </svg>
+  );
+}
+
+export function IconStats({ size = 15 }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" {...strokeProps}>
+      <path d="M4 20V10" />
+      <path d="M10 20V4" />
+      <path d="M16 20v-7" />
+      <path d="M22 20H2" />
     </svg>
   );
 }

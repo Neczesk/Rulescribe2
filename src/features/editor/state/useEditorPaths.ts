@@ -8,6 +8,10 @@ export interface EditorPaths {
   keyword: (keywordId: string) => string;
   /** The list-building side of this ruleset. */
   listBuilding: string;
+  /** The export configuration screen for this ruleset. */
+  export: string;
+  /** The rulebook theme workspace for this ruleset. */
+  exportTheme: string;
 }
 
 /** Absolute editor routes for the currently loaded ruleset. */
@@ -19,5 +23,7 @@ export function useEditorPaths(): EditorPaths {
     article: (articleId) => `${base}/${articleId}`,
     keyword: (keywordId) => `${base}/keyword/${keywordId}`,
     listBuilding: `${base}/list-building`,
+    export: `${base}/export`,
+    exportTheme: `${base}/export/theme`,
   };
 }

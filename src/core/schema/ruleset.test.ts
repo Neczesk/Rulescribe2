@@ -42,9 +42,9 @@ describe("ruleset serialization round-trip", () => {
     expect(parsed.registry.diagrams).toEqual({});
   });
 
-  it("stamps schemaVersion 13 and empty nodeDefs / categoryRecords for a fresh ruleset", () => {
+  it("stamps schemaVersion 14 and empty nodeDefs / categoryRecords for a fresh ruleset", () => {
     const revived = ruleset.parse(JSON.parse(JSON.stringify(createRuleset())));
-    expect(revived.schemaVersion).toBe(13);
+    expect(revived.schemaVersion).toBe(14);
     expect(revived.registry.nodeDefs).toEqual({});
     expect(revived.registry.categoryRecords).toEqual({});
   });

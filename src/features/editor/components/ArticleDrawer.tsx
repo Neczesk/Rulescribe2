@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { IconPlus } from "../../../app/components/icons";
+import type { TodoRef } from "../../../core/schema/references";
 import type { Article, Keyword, StructureNode } from "../../../core/schema/ruleset";
 import { currentRulesetStore } from "../../../core/state/currentRuleset";
 import { useEditorPaths } from "../state/useEditorPaths";
 import classes from "./ArticleDrawer.module.css";
 import { KeywordList } from "./KeywordList";
 import { StructureTree } from "./StructureTree";
+import { TodoList } from "./TodoList";
 
-type DrawerTab = "articles" | "keywords";
+type DrawerTab = "articles" | "keywords" | "todos";
 
 interface ArticleDrawerProps {
   opened: boolean;
@@ -18,6 +20,7 @@ interface ArticleDrawerProps {
   selectedId?: string;
   keywords: Record<string, Keyword>;
   references: Record<string, string[]>;
+  todos: TodoRef[];
   selectedKeywordId?: string;
 }
 
@@ -29,6 +32,7 @@ export function ArticleDrawer({
   selectedId,
   keywords,
   references,
+  todos,
   selectedKeywordId,
 }: ArticleDrawerProps) {
   const navigate = useNavigate();
@@ -45,6 +49,7 @@ export function ArticleDrawer({
   };
 
   const keywordCount = Object.keys(keywords).length;
+  const openTodoCount = todos.filter((todo) => !todo.resolved).length;
 
   return (
     <aside className={classes.drawer}>
@@ -63,9 +68,17 @@ export function ArticleDrawer({
         >
           Keywords <span className={classes.tabCount}>{keywordCount}</span>
         </button>
+        <button
+          type="button"
+          className={tab === "todos" ? `${classes.tab} ${classes.tabOn}` : classes.tab}
+          onClick={() => setTab("todos")}
+        >
+          TODOs
+          {openTodoCount > 0 && <span className={classes.tabBadge}>{openTodoCount}</span>}
+        </button>
       </div>
 
-      {tab === "articles" ? (
+      {tab === "articles" && (
         <>
           <StructureTree root={root} articles={articles} selectedId={selectedId} />
           <button type="button" className={classes.newArticle} onClick={addTopLevel}>
@@ -73,13 +86,15 @@ export function ArticleDrawer({
             New article
           </button>
         </>
-      ) : (
+      )}
+      {tab === "keywords" && (
         <KeywordList
           keywords={keywords}
           references={references}
           selectedKeywordId={selectedKeywordId}
         />
       )}
+      {tab === "todos" && <TodoList todos={todos} />}
     </aside>
   );
 }

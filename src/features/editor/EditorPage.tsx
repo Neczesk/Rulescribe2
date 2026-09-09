@@ -4,7 +4,7 @@ import { useState } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Navigate, useParams } from "react-router";
-import { keywordReferences } from "../../core/schema/references";
+import { keywordReferences, todoReferences } from "../../core/schema/references";
 import { currentRulesetStore } from "../../core/state/currentRuleset";
 import { ArticleDrawer } from "./components/ArticleDrawer";
 import { ArticleHeader } from "./components/ArticleHeader";
@@ -20,6 +20,7 @@ import {
 } from "./extensions/image-block/insertImage";
 import { KeywordRef } from "./extensions/keyword-ref/KeywordRef";
 import { tableExtensions } from "./extensions/table/tableExtensions";
+import { Todo } from "./extensions/todo/Todo";
 import "./editorContent.css";
 import classes from "./EditorPage.module.css";
 import { useRuleset } from "./state/useCurrentRuleset";
@@ -43,6 +44,7 @@ export function EditorPage() {
       extensions: [
         StarterKit,
         Callout,
+        Todo,
         ArticleRef,
         KeywordRef,
         ImageBlock,
@@ -100,6 +102,7 @@ export function EditorPage() {
           onDownload={fileActions.onDownload}
           onOpenFile={fileActions.onOpenFile}
           listBuildingHref={paths.listBuilding}
+          exportHref={paths.export}
         />
         <EditorToolbar editor={editor} />
         <div className={classes.body}>
@@ -111,6 +114,7 @@ export function EditorPage() {
             selectedId={selectedId!}
             keywords={ruleset.registry.keywords}
             references={keywordReferences(ruleset)}
+            todos={todoReferences(ruleset)}
           />
           <div className={classes.article}>
             <ArticleHeader

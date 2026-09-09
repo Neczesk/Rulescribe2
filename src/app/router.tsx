@@ -91,6 +91,31 @@ export const router = createBrowserRouter([
         ],
       },
       {
+        path: "export",
+        lazy: async () => {
+          const { ExportLayout } = await import("../features/editor/export/ExportLayout");
+          return { Component: ExportLayout };
+        },
+        children: [
+          {
+            index: true,
+            lazy: async () => {
+              const { ExportConfigPage } =
+                await import("../features/editor/export/ExportConfigPage");
+              return { Component: ExportConfigPage };
+            },
+          },
+          {
+            path: "theme",
+            lazy: async () => {
+              const { ThemeWorkspacePage } =
+                await import("../features/editor/export/ThemeWorkspacePage");
+              return { Component: ThemeWorkspacePage };
+            },
+          },
+        ],
+      },
+      {
         path: "keyword/:keywordId",
         lazy: async () => {
           const { KeywordEditorPage } = await import("../features/editor/KeywordEditorPage");

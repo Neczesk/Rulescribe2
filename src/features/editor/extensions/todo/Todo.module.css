@@ -1,0 +1,86 @@
+.todo {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  border: 1.5px dashed var(--color-accent);
+  background: var(--color-accent-100);
+  padding: var(--space-3) var(--space-4);
+  margin: var(--space-4) 0;
+}
+
+.todo.resolved {
+  border-color: var(--color-neutral-500);
+  background: var(--color-surface);
+}
+
+.check {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  border: 1.5px solid var(--color-accent);
+  background: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+}
+
+.resolved .check {
+  border-color: var(--color-neutral-500);
+  background: var(--color-neutral-500);
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+}
+
+.label {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--color-accent-700);
+  margin-bottom: var(--space-1);
+}
+
+.resolved .label {
+  color: var(--color-neutral-700);
+}
+
+.input {
+  font: inherit;
+  font-size: 15px;
+  line-height: 1.5;
+  min-height: 0;
+  padding: 0;
+}
+
+.done {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--color-neutral-700);
+  text-decoration: line-through;
+  white-space: pre-wrap;
+}
+
+.remove {
+  flex: none;
+  border: none;
+  background: none;
+  padding: 2px;
+  cursor: pointer;
+  color: color-mix(in srgb, var(--color-text) 45%, transparent);
+}
+
+.remove:hover {
+  color: var(--color-accent-700);
+}
+
+:global(.ProseMirror-selectednode) > .todo {
+  outline: 2px solid color-mix(in srgb, var(--color-accent) 35%, transparent);
+  outline-offset: 2px;
+}

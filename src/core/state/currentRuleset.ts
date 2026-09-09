@@ -68,6 +68,36 @@ type DistributiveOmit<T, K extends keyof never> = T extends unknown ? Omit<T, K>
 export type DiagramPatch = Partial<DistributiveOmit<DiagramEntry, "id" | "kind">>;
 type NewDiagramEntry = DistributiveOmit<DiagramEntry, "id"> & { id?: string };
 
+/**
+ * Return a copy of `doc` with the `resolved` attr of the `todo` node whose
+ * `todoId` matches set to `resolved`. Returns the same reference when nothing
+ * changed, so a store `patch` can no-op.
+ */
+function setTodoResolvedInDoc(doc: RichText, todoId: string, resolved: boolean): RichText {
+  let changed = false;
+  const visit = (node: RichText): RichText => {
+    let next = node;
+    if (
+      node.type === "todo" &&
+      node.attrs?.todoId === todoId &&
+      node.attrs?.resolved !== resolved
+    ) {
+      next = { ...node, attrs: { ...node.attrs, resolved } };
+      changed = true;
+    }
+    const kids = next.content;
+    if (kids) {
+      const content = kids.map(visit);
+      if (content.some((child, i) => child !== kids[i])) {
+        next = { ...next, content };
+      }
+    }
+    return next;
+  };
+  const result = visit(doc);
+  return changed ? result : doc;
+}
+
 interface AddArticleOptions {
   parentId: string;
   index?: number;
@@ -92,6 +122,8 @@ interface CurrentRulesetState {
   deleteArticle: (articleId: string) => void;
   moveNode: (articleId: string, target: MoveTarget) => void;
   updateArticleText: (articleId: string, text: RichText) => void;
+  /** Flip the `resolved` attr of one `todo` node (by its `todoId`) in an article. */
+  setTodoResolved: (articleId: string, todoId: string, resolved: boolean) => void;
   /** Create a keyword in the registry and return its id. */
   addKeyword: (options?: { displayName?: string }) => string | null;
   updateKeyword: (keywordId: string, patch: KeywordPatch) => void;
@@ -381,6 +413,26 @@ export const currentRulesetStore = createStore<CurrentRulesetState>((set, get) =
             articles: {
               ...current.registry.articles,
               [articleId]: { ...existing, text },
+            },
+          },
+        };
+      });
+    },
+
+    setTodoResolved: (articleId, todoId, resolved) => {
+      patch((current) => {
+        const existing = current.registry.articles[articleId];
+        if (!existing) return current;
+        const text = setTodoResolvedInDoc(existing.text, todoId, resolved);
+        const shortText = setTodoResolvedInDoc(existing.shortText, todoId, resolved);
+        if (text === existing.text && shortText === existing.shortText) return current;
+        return {
+          ...current,
+          registry: {
+            ...current.registry,
+            articles: {
+              ...current.registry.articles,
+              [articleId]: { ...existing, text, shortText },
             },
           },
         };

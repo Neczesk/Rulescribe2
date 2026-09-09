@@ -1,3 +1,4 @@
+import { shortId } from "../../util/nanoid";
 import { generatedResourceConstraint } from "../engine/resourceConstraints";
 
 /**
@@ -7,7 +8,7 @@ import { generatedResourceConstraint } from "../engine/resourceConstraints";
  */
 
 /** Latest on-disk schema version this build understands. */
-export const CURRENT_SCHEMA_VERSION = 13;
+export const CURRENT_SCHEMA_VERSION = 14;
 
 /**
  * v1->v2 `registry.images`; v2->v3 `registry.diagrams`; v3->v4 `article.isNotes`;
@@ -32,6 +33,11 @@ export const CURRENT_SCHEMA_VERSION = 13;
  * the `limit` / `require` Metric-Condition algebra, and materializes each
  * resource cap as a generated `limit` on every format. Both need real
  * transforms, below.
+ *
+ * v13->v14 introduces the `todo` rich-text node. `rewriteTodos` finds the exact
+ * string "TODO" in any article body/short-text block and turns that word plus
+ * the rest of its sentence into a `todo` node (the leading "TODO" stripped from
+ * the stored text). Needs a real transform, below.
  */
 export function migrate(raw: unknown): unknown {
   if (!raw || typeof raw !== "object" || !("schemaVersion" in raw)) return raw;
@@ -45,6 +51,7 @@ export function migrate(raw: unknown): unknown {
     migrated = rewriteConstraints(migrated);
     migrated = backfillResourceConstraints(migrated);
   }
+  if (version < 14) migrated = rewriteTodos(migrated);
   return { ...(migrated as object), schemaVersion: CURRENT_SCHEMA_VERSION };
 }
 
@@ -168,4 +175,128 @@ function backfillResourceConstraints(node: unknown): unknown {
   });
 
   return { ...root, listBuilding: { ...lb, formats } };
+}
+
+// ---------------------------------------------------------------------------
+// v13 -> v14: the `todo` rich-text node.
+// ---------------------------------------------------------------------------
+
+type DocNode = {
+  type?: string;
+  attrs?: Record<string, unknown>;
+  content?: DocNode[];
+  text?: string;
+};
+
+const SENTENCE_TERMINATOR = /[.!?]/;
+
+/** Concatenate the plain text of a block's immediate inline children. */
+function inlineText(block: DocNode): string {
+  return (block.content ?? [])
+    .map((child) => (child.type === "text" ? (child.text ?? "") : ""))
+    .join("");
+}
+
+const textBlock = (
+  type: string,
+  attrs: Record<string, unknown> | undefined,
+  value: string,
+): DocNode => ({
+  type,
+  ...(attrs ? { attrs } : {}),
+  content: [{ type: "text", text: value }],
+});
+
+/**
+ * If `block` is a paragraph/heading whose text contains the exact string
+ * "TODO", return the blocks that replace it: the text before the TODO
+ * sentence (same block type, if any), the new `todo` node, then the text
+ * after (if any). Returns `null` when there's nothing to convert.
+ * Only the first "TODO" in the block is converted.
+ */
+function splitBlockOnTodo(block: DocNode): DocNode[] | null {
+  if (block.type !== "paragraph" && block.type !== "heading") return null;
+  const flat = inlineText(block);
+  const at = flat.indexOf("TODO");
+  if (at === -1) return null;
+
+  // Sentence start: just after the previous terminator that is followed by
+  // whitespace, else the block start. Then skip the gap whitespace.
+  let start = 0;
+  for (let i = at - 1; i >= 0; i--) {
+    if (SENTENCE_TERMINATOR.test(flat[i]) && (i + 1 >= flat.length || /\s/.test(flat[i + 1]))) {
+      start = i + 1;
+      break;
+    }
+  }
+  while (start < at && /\s/.test(flat[start])) start++;
+
+  // Sentence end: the next terminator at or after "TODO", inclusive; else end.
+  let end = flat.length;
+  for (let i = at; i < flat.length; i++) {
+    if (SENTENCE_TERMINATOR.test(flat[i])) {
+      end = i + 1;
+      break;
+    }
+  }
+
+  const before = flat.slice(0, start).replace(/\s+$/, "");
+  const sentence = flat.slice(start, end);
+  const after = flat.slice(end).replace(/^\s+/, "");
+  const todoText = sentence.replace(/^TODO[\s:–—-]*/, "").trim();
+
+  const out: DocNode[] = [];
+  if (before) out.push(textBlock(block.type, block.attrs, before));
+  out.push({ type: "todo", attrs: { todoId: shortId(), text: todoText, resolved: false } });
+  if (after) out.push(textBlock(block.type, block.attrs, after));
+  return out;
+}
+
+/** Rewrite one rich-text doc, expanding any "TODO" sentence into a `todo` node. */
+function rewriteTodosInDoc(doc: unknown): unknown {
+  if (!doc || typeof doc !== "object") return doc;
+  const d = doc as DocNode;
+  if (!Array.isArray(d.content)) return doc;
+
+  let changed = false;
+  const content: DocNode[] = [];
+  for (const block of d.content) {
+    const split = splitBlockOnTodo(block);
+    if (split) {
+      content.push(...split);
+      changed = true;
+    } else {
+      content.push(block);
+    }
+  }
+  return changed ? { ...d, content } : doc;
+}
+
+/** Deep-clone `node`, rewriting every article's `text` / `shortText` doc. */
+function rewriteTodos(node: unknown): unknown {
+  if (!node || typeof node !== "object") return node;
+  const root = node as Record<string, unknown>;
+  const registry = root.registry as Record<string, unknown> | undefined;
+  const articles = registry?.articles as Record<string, unknown> | undefined;
+  if (!articles) return node;
+
+  let changed = false;
+  const nextArticles: Record<string, unknown> = {};
+  for (const [id, article] of Object.entries(articles)) {
+    if (!article || typeof article !== "object") {
+      nextArticles[id] = article;
+      continue;
+    }
+    const a = article as Record<string, unknown>;
+    const text = rewriteTodosInDoc(a.text);
+    const shortText = rewriteTodosInDoc(a.shortText);
+    if (text !== a.text || shortText !== a.shortText) {
+      nextArticles[id] = { ...a, text, shortText };
+      changed = true;
+    } else {
+      nextArticles[id] = article;
+    }
+  }
+  if (!changed) return node;
+  return { ...root, registry: { ...registry, articles: nextArticles } };
 }

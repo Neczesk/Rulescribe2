@@ -1,7 +1,7 @@
 import { Divider, Menu } from "@mantine/core";
 import type { Editor } from "@tiptap/core";
 import { useEditorState } from "@tiptap/react";
-import { IconBulletList, IconCallout, IconNumberedList, IconTable } from "../icons";
+import { IconBulletList, IconCallout, IconNumberedList, IconTable, IconTodo } from "../icons";
 import { createTableContent } from "../extensions/table/tableExtensions";
 import { ArticleRefToolbarButton } from "./ArticleRefToolbarButton";
 import { DiagramToolbarButton } from "./DiagramToolbarButton";
@@ -152,6 +152,12 @@ export function EditorToolbar({ editor, compact = false }: EditorToolbarProps) {
         aria-label="Callout"
         active={state?.callout}
         onClick={() => editor?.chain().focus().toggleCallout().run()}
+      />
+      <ToolbarButton
+        icon={<IconTodo />}
+        label="TODO"
+        aria-label="Insert TODO"
+        onClick={() => editor?.chain().focus().insertTodo().run()}
       />
       <Divider orientation="vertical" />
       <ImageToolbarButton editor={editor} />

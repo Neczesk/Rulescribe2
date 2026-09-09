@@ -8,8 +8,9 @@ import {
   keywordReferences,
   keywordUseCount,
   richTextToPlainText,
+  todoReferences,
 } from "./references";
-import type { Article, Ruleset } from "./ruleset";
+import type { Article, Ruleset, StructureNode } from "./ruleset";
 
 const kwRef = (keywordId: string): JSONContent => ({ type: "keywordRef", attrs: { keywordId } });
 
@@ -138,5 +139,43 @@ describe("diagramUseCount", () => {
     );
     expect(diagramUseCount(rs, "d1")).toBe(2);
     expect(diagramUseCount(rs, "missing")).toBe(0);
+  });
+});
+
+const todoNode = (todoId: string, text: string, resolved = false): JSONContent => ({
+  type: "todo",
+  attrs: { todoId, text, resolved },
+});
+
+describe("todoReferences", () => {
+  it("collects every todo node with its resolved flag", () => {
+    const rs = rulesetWith(
+      article("art1", doc(para(text("x")), todoNode("t1", "do a"))),
+      article("art2", doc(todoNode("t2", "do b", true))),
+    );
+    const refs = todoReferences(rs);
+    expect(refs).toHaveLength(2);
+    expect(refs.find((r) => r.todoId === "t1")).toMatchObject({
+      articleId: "art1",
+      text: "do a",
+      resolved: false,
+    });
+    expect(refs.find((r) => r.todoId === "t2")?.resolved).toBe(true);
+  });
+
+  it("builds a breadcrumb from the structure tree, dropping the tree root", () => {
+    const rs = rulesetWith(
+      article("root", doc(para())),
+      article("core", doc(para())),
+      article("combat", doc(todoNode("t1", "check"))),
+    );
+    (rs as { structure: StructureNode }).structure = {
+      articleId: "root",
+      children: [{ articleId: "core", children: [{ articleId: "combat", children: [] }] }],
+    };
+    rs.registry.articles.root.title = "Untitled";
+    rs.registry.articles.core.title = "Core Rules";
+    rs.registry.articles.combat.title = "Combat";
+    expect(todoReferences(rs)[0].breadcrumb).toBe("Core Rules / Combat");
   });
 });

@@ -1,9 +1,15 @@
 import { ActionIcon, Badge, Button, Group, Menu, Modal, TextInput, Tooltip } from "@mantine/core";
-import { useRef, useState } from "react";
+import { lazy, Suspense, useRef, useState } from "react";
 import { Link } from "react-router";
 import type { SaveStatus } from "../../../core/state/persistence";
-import { IconArrowLeft, IconDots, IconListBuilding, IconMenu } from "../icons";
+import { IconArrowLeft, IconDots, IconListBuilding, IconMenu, IconStats } from "../icons";
 import classes from "./EditorNav.module.css";
+
+/**
+ * Lazy so the stats panel's own weight — `text-readability`, and Mermaid when a
+ * diagram needs parsing — stays out of the editor bundle until it is opened.
+ */
+const StatsModal = lazy(() => import("../stats/StatsModal"));
 
 interface EditorNavProps {
   /**
@@ -21,6 +27,8 @@ interface EditorNavProps {
   onOpenFile: (file: File) => void;
   /** Route to this ruleset's list-building side. */
   listBuildingHref: string;
+  /** Route to this ruleset's export screen. */
+  exportHref: string;
 }
 
 const SAVE_LABEL: Record<SaveStatus, string> = {
@@ -40,9 +48,11 @@ export function EditorNav({
   onDownload,
   onOpenFile,
   listBuildingHref,
+  exportHref,
 }: EditorNavProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [renameOpen, setRenameOpen] = useState(false);
+  const [statsOpen, setStatsOpen] = useState(false);
   const [draftName, setDraftName] = useState(rulesetTitle);
 
   const openRename = () => {
@@ -130,6 +140,20 @@ export function EditorNav({
       >
         List building
       </Button>
+      <Button
+        variant="default"
+        size="xs"
+        leftSection={<IconStats />}
+        title="Ruleset statistics"
+        onClick={() => setStatsOpen(true)}
+      >
+        Stats
+      </Button>
+      {statsOpen && (
+        <Suspense fallback={null}>
+          <StatsModal onClose={() => setStatsOpen(false)} />
+        </Suspense>
+      )}
       <Tooltip
         label="This ruleset could not be written to local storage — your recent changes are only in memory. Use “Save to file” to keep a copy."
         multiline
@@ -153,6 +177,9 @@ export function EditorNav({
         </Menu.Target>
         <Menu.Dropdown>
           <Menu.Item onClick={openRename}>Rename ruleset…</Menu.Item>
+          <Menu.Item component={Link} to={exportHref}>
+            Export…
+          </Menu.Item>
           <Menu.Item onClick={onDownload}>Save to file</Menu.Item>
           <Menu.Item onClick={() => fileInputRef.current?.click()}>Open file…</Menu.Item>
         </Menu.Dropdown>

@@ -71,7 +71,7 @@ export function createRuleset(title?: string): Ruleset {
   const rootArticle = article.parse({ title: "Untitled", text: DEMO_DOC });
 
   return ruleset.parse({
-    schemaVersion: 13,
+    schemaVersion: 14,
     metadata: metadata.parse({ title: title?.trim() || "Untitled ruleset" }),
     registry: {
       articles: { [rootArticle.id]: rootArticle },
