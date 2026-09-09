@@ -11,7 +11,8 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "format": "oxfmt --check",
-    "format:fix": "oxfmt ."
+    "format:fix": "oxfmt .",
+    "build:github-pages": "vite build --mode github-pages"
   },
   "dependencies": {
     "@excalidraw/excalidraw": "^0.18.1",
