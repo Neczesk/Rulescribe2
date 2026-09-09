@@ -7,7 +7,7 @@ import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig(({ mode }) => {
   // Change this if your GitHub repository has a different name.
-  const githubPagesBase = "/RuleScribe2/";
+  const githubPagesBase = "/Rulescribe2/";
 
   // Normal dev/production builds live at /.
   // Only the special GitHub Pages build lives under /RuleScribe/.
