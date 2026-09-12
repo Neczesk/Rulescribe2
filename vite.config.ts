@@ -5,13 +5,10 @@ import react, { reactCompilerPreset } from "@vitejs/plugin-react";
 import babel from "@rolldown/plugin-babel";
 import { VitePWA } from "vite-plugin-pwa";
 
-export default defineConfig(({ mode }) => {
-  // Change this if your GitHub repository has a different name.
-  const githubPagesBase = "/Rulescribe2/";
-
-  // Normal dev/production builds live at /.
-  // Only the special GitHub Pages build lives under /RuleScribe/.
-  const base = mode === "github-pages" ? githubPagesBase : "/";
+export default defineConfig(() => {
+  // Served at / — a Cloudflare Worker (static assets) at a custom subdomain,
+  // not a GitHub Pages repo subpath. See CLAUDE.md's Gotchas for the migration.
+  const base = "/";
 
   return {
     base,
@@ -30,12 +27,11 @@ export default defineConfig(({ mode }) => {
           name: "RuleScribe",
           short_name: "RuleScribe",
           description:
-            "Local-only editor and army list builder for tabletop wargame rulesets. Works offline; all data stays on your device.",
+            "Local-first editor and army list builder for tabletop wargame rulesets. Works fully offline; sign in only if you want sync or share links.",
           lang: "en",
           display: "standalone",
           orientation: "any",
 
-          // These need to follow the Vite base.
           start_url: base,
           scope: base,
 
@@ -44,7 +40,6 @@ export default defineConfig(({ mode }) => {
 
           categories: ["productivity", "games", "utilities"],
 
-          // Relative URLs work both at / and /RuleScribe/.
           icons: [
             {
               src: "pwa-192x192.png",

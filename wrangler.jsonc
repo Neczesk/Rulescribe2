@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "rulescribe2",
+  "compatibility_date": "2026-09-12",
+  // Assets-only Worker — no entry script. `single-page-application` serves
+  // index.html with a 200 for any path that doesn't match a built asset,
+  // which is what lets a cold visit to a deep link (e.g. /v/<shareId> or
+  // /editor/<id>) resolve instead of 404ing. This replaces the old GitHub
+  // Pages 404.html redirect shim — see CLAUDE.md's Gotchas.
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application",
+  },
+}

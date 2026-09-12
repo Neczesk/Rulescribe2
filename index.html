@@ -6,7 +6,7 @@
     <title>RuleScribe</title>
     <meta
       name="description"
-      content="Local-only editor and army list builder for tabletop wargame rulesets. Works offline; all data stays on your device."
+      content="Local-first editor and army list builder for tabletop wargame rulesets. Works fully offline; sign in only if you want sync or share links."
     />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ec3013" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#201e1d" />
@@ -36,21 +36,6 @@
           document.documentElement.setAttribute("data-mantine-color-scheme", resolved);
         } catch (e) {}
       })();
-    </script>
-    <script>
-      (function (l) {
-        if (l.search[1] === "/") {
-          var decoded = l.search
-            .slice(1)
-            .split("&")
-            .map(function (s) {
-              return s.replace(/~and~/g, "&");
-            })
-            .join("?");
-
-          window.history.replaceState(null, "", l.pathname.slice(0, -1) + decoded + l.hash);
-        }
-      })(window.location);
     </script>
   </head>
   <body>
